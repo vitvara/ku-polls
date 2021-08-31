@@ -1,0 +1,19 @@
+body {
+    background: #fafafa;
+    color: #333333;
+    margin-top: 3rem;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    color: #444444;
+  }
+  .polls-section {
+    background: #272424;
+    padding: 10px 20px;
+    border: 1px solid #201f1f;
+    border-radius: 3px;
+    margin-bottom: 20px;
+  }
+  .poll-pub-date {
+    margin-right: 20px;
+    color: #ffffff;
+  }
