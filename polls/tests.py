@@ -6,6 +6,7 @@ from django.urls import reverse
 
 from .models import Question
 
+
 # TEst Question
 class QuestionModelTests(TestCase):
 
@@ -47,6 +48,7 @@ def create_question(question_text, days):
     time = timezone.now() + datetime.timedelta(days=days)
     return Question.objects.create(text=question_text, pub_date=time)
 
+
 class QuestionIndexViewTests(TestCase):
     def test_no_questions(self):
         """
@@ -78,7 +80,7 @@ class QuestionIndexViewTests(TestCase):
         response = self.client.get(reverse('polls:index'))
         self.assertContains(response, "No polls are available.")
         self.assertQuerysetEqual(response.context['latest_question_list'], [])
-    
+
     def test_future_question_and_past_question(self):
         """
         Even if both past and future questions exist, only past questions
@@ -91,7 +93,7 @@ class QuestionIndexViewTests(TestCase):
             response.context['latest_question_list'],
             ['<Question: Past question.>']
         )
-    
+
     def test_two_past_questions(self):
         """
         The questions index page may display multiple questions.
@@ -103,6 +105,7 @@ class QuestionIndexViewTests(TestCase):
             response.context['latest_question_list'],
             ['<Question: Past question 2.>', '<Question: Past question 1.>']
         )
+
 
 # Test Question Index View
 class QuestionDetailViewTests(TestCase):

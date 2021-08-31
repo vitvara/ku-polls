@@ -20,6 +20,7 @@ class IndexView(ListView):
         # Show newest 5 published polls or survey.
         return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
 
+
 class DetailView(DetailView):
     """Displayed all question in poll"""
     model = Question
@@ -31,16 +32,18 @@ class DetailView(DetailView):
         """
         return Question.objects.filter(pub_date__lte=timezone.now())
 
+
 class ResultsView(DetailView):
     model = Question
     template_name = 'polls/results.html'
+
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
         print(type(request.POST['choice']))
         selected_choice = question.choice_set.get(pk=int(request.POST['choice']))
-        
+
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form.
         return render(request, 'polls/detail.html', {
@@ -48,7 +51,7 @@ def vote(request, question_id):
             'error_message': "You didn't select a choice.",
         })
     else:
-        
+
         selected_choice.votes += 1
         selected_choice.save()
         print('debug1')
