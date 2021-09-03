@@ -1,6 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
+from django.contrib import messages
 from django.views.generic import ListView, DetailView
 from django.utils import timezone
 
@@ -43,12 +44,12 @@ def vote(request, question_id):
     try:
         print(type(request.POST['choice']))
         selected_choice = question.choice_set.get(pk=int(request.POST['choice']))
-
+        messages.success(request, "You voted successfully.")
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form.
+        messages.warning(request, "You didn't select a choice.", fail_silently=True,)
         return render(request, 'polls/detail.html', {
             'question': question,
-            'error_message': "You didn't select a choice.",
         })
     else:
 
