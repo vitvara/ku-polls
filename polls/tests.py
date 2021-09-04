@@ -17,7 +17,7 @@ class QuestionModelTests(TestCase):
         """
         time = timezone.now() + datetime.timedelta(days=30)
         future_question = Question(pub_date=time)
-        self.assertIs(future_question.was_published_recently(), False)
+        self.assertFalse(future_question.was_published_recently())
 
     def test_was_published_recently_with_old_question(self):
         """
@@ -26,7 +26,7 @@ class QuestionModelTests(TestCase):
         """
         time = timezone.now() - datetime.timedelta(days=1, seconds=1)
         old_question = Question(pub_date=time)
-        self.assertIs(old_question.was_published_recently(), False)
+        self.assertFalse(old_question.was_published_recently())
 
     def test_was_published_recently_with_recent_question(self):
         """
@@ -35,7 +35,7 @@ class QuestionModelTests(TestCase):
         """
         time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
         recent_question = Question(pub_date=time)
-        self.assertIs(recent_question.was_published_recently(), True)
+        self.assertTrue(recent_question.was_published_recently())
 
 
 # Test Index View
@@ -105,6 +105,27 @@ class QuestionIndexViewTests(TestCase):
             response.context['latest_question_list'],
             ['<Question: Past question 2.>', '<Question: Past question 1.>']
         )
+    def test_six_past_questions(self):
+        """
+        The questions must show only 5 newest question.
+        """
+        create_question(question_text="Past question 1.", days=-30)
+        create_question(question_text="Past question 2.", days=-25)
+        create_question(question_text="Past question 3.", days=-20)
+        create_question(question_text="Past question 4.", days=-10)
+        create_question(question_text="Past question 5.", days=-5)
+        create_question(question_text="Past question 6.", days=-1)
+        response = self.client.get(reverse('polls:index'))
+        self.assertQuerysetEqual(
+            response.context['latest_question_list'],
+            [
+            '<Question: Past question 6.>',
+            '<Question: Past question 5.>',
+            '<Question: Past question 4.>',
+            '<Question: Past question 3.>',
+            '<Question: Past question 2.>'
+            ]
+        )
 
 
 # Test Question Index View
@@ -125,6 +146,20 @@ class QuestionDetailViewTests(TestCase):
         displays the question's text.
         """
         past_question = create_question(question_text='Past Question.', days=-5)
+        url = reverse('polls:detail', args=(past_question.id,))
+        response = self.client.get(url)
+        self.assertContains(response, past_question.text)
+
+    def test_six_past_question(self):
+        """
+        Unlisted question must be accessible.
+        """
+        past_question = create_question(question_text="Past question 1.", days=-30)
+        create_question(question_text="Past question 2.", days=-25)
+        create_question(question_text="Past question 3.", days=-20)
+        create_question(question_text="Past question 4.", days=-10)
+        create_question(question_text="Past question 5.", days=-5)
+        create_question(question_text="Past question 6.", days=-1)
         url = reverse('polls:detail', args=(past_question.id,))
         response = self.client.get(url)
         self.assertContains(response, past_question.text)
