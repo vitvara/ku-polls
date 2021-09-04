@@ -1,16 +1,27 @@
 {% extends "polls/base.html" %}
 {% block content %}
+<!-- content header -->
 <h1 style="margin-bottom: 30px;">{{ question.text }}</h1>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
+<!-- main content -->
+<!-- request api question vote -->
 <form action="{% url 'polls:vote' question.id %}" method="post">
 {% csrf_token %}
-{% for choice in question.choice_set.all %}
+{% if question.choice_set.all %}
+    {% for choice in question.choice_set.all %}
+        <!-- display list of choice in question.id -->
         <input class="choice_input" type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-    <label class="choice_label" for="choice{{ forloop.counter }}">{{ choice.text }}</label><br>
-
-{% endfor %}
-    <input type="submit" class="next-page" value="Vote">
-</form>
+        <label class="choice_label" for="choice{{ forloop.counter }}">{{ choice.text }}</label><br>
+    {% endfor %}
+        <!-- submit vote and go to the next page (?/result) -->
+        <input type="submit" class="next-page" value="Vote">
+    </form>
+{% else %}
+<div class="container">
+    <h3 style="color: #870000">No choice in this question</h3>
+    <a type="submit" class="next-page" style="margin-top: 3rem" href="/polls">Back</a>
+</div>
+{% endif %}
 {% endblock content %}

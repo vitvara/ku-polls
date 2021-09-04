@@ -1,18 +1,18 @@
 {% extends "polls/base.html" %}
 {% block content %}
 {% if latest_question_list %}
-    <ul>
     {% for question in latest_question_list %}
+    <!-- list 5 newest polls -->
         <div class="polls-section">
             <a class="question_text_polls" href="{% url 'polls:detail' question.id %}">
                 {{ question.text }}
             </a>
             <div class="poll-pub-date">
+                <!-- date format ex. 22:29 31-aug-21 -->
                 <small>{{ question.pub_date|date:"H:i d-b-y" }}</small>
             </div>
         </div>
     {% endfor %}
-    </ul>
 {% else %}
     <p>No polls are available.</p>
 {% endif %}

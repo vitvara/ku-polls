@@ -1,12 +1,16 @@
 {% extends "polls/base.html" %}
 {% block content %}
+<!--  content header  -->
 <h1>{{ question.question_text }}</h1>
 
+<!--  main content  -->
 <ul>
 {% for choice in question.choice_set.all %}
+    <!--  display a list of the number of vote for each choice  -->
     <li class="choice_voted">{{ choice.text }}&nbsp;&nbsp;|&nbsp;&nbsp;{{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
 {% endfor %}
 </ul>
 
+<!-- link redirect to polls/question.id -->
 <a class="next-page" href="{% url 'polls:detail' question.id %}">Vote again?</a>
 {% endblock content %}

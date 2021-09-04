@@ -1,5 +1,5 @@
 body {
-    background: #fafafa;
+    background: #fcf7e6;
     color: #aadbf2;
     margin-top: 5rem;
   }
@@ -78,11 +78,11 @@ body {
         border: 5px solid #1d9157;
     }
 
-/* vote style */
+/* next page button style */
 .next-page {
-        border: 1px solid #437ce6;
+        border: 1px solid #201f1f;
         background-color: transparent;
-        color: #437ce6;
+        color: #201f1f;
         padding: 5px 20px;
         font-size: 18px;
         font-weight: 500;
@@ -95,7 +95,7 @@ body {
         text-transform: capitalize;
     }
     .next-page {
-        background-image: linear-gradient(0, #437ce6, #437ce6);
+        background-image: linear-gradient(0, #201f1f, #201f1f);
         background-size: 0;
         transition: .8s;
         background-repeat: no-repeat;
@@ -103,7 +103,7 @@ body {
 
     .next-page:hover {
         background-size: 100%;
-        color: #fff;
+        color: #ffde85;
     }
     a.next-page {
       text-decoration: none;

@@ -8,23 +8,23 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+    <!-- polls static polls/main.css -->
     <link rel="stylesheet" type="text/css" href="{% static 'polls/main.css' %}">
 
-    {% if title %}
-        <title>KU POLLS - {{ title }}</title>
-    {% else %}
-        <title>KU POLLS</title>
-    {% endif %}
+    <title>KU POLLS</title>
 </head>
 <body>
+    <!-- Navigation bar -->
     <header class="site-header">
         <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
             <div class="container">
+                <!-- KU POLLS logo link to /polls page -->
                 <a class="nav-link question_text_polls" href="/polls">KU POLLS</a>
             </div>
         </nav>
     </header>
     <main role="main" class="container">
+        <!-- message section -->
         <div>
             {% if messages %}
                 {% for message in messages %}
@@ -33,6 +33,7 @@
                     </div>
                 {% endfor %}
             {% endif %}
+            <!-- content section -->
             {% block content %}{% endblock %}
         </div>
 
