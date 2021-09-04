@@ -17,7 +17,6 @@ class IndexView(ListView):
     def get_context_data(self, *args, **kwargs):
         data = super(IndexView, self).get_context_data(*args, **kwargs)
         data['title'] = "List"
-        print(data)
         return data
 
     def get_queryset(self):
