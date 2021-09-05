@@ -1,0 +1,128 @@
+body {
+    background: #fcf7e6;
+    color: #aadbf2;
+    margin-top: 5rem;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    color: #444444;
+  }
+  .bg-steel {
+    background-color: #272424;
+  }
+
+/* polls page */
+  .polls-section {
+    background: #272424;
+    padding: 10px 20px;
+    border: 1px solid #201f1f;
+    border-radius: 3px;
+    margin-bottom: 20px;
+  }
+  .poll-pub-date {
+    margin-right: 20px;
+    color: #ffffff;
+  }
+
+/* link styling */
+    a.question_text_polls:link {
+      color: #ffde85;
+      background-color: transparent;
+      text-decoration: none;
+    }
+
+    a.question_text_polls:visited {
+      color: #ffde85;
+      background-color: transparent;
+      text-decoration: none;
+    }
+
+    a.question_text_polls:hover {
+      color: #cca845;
+      background-color: transparent;
+      text-decoration: none;
+    }
+
+    a.question_text_polls:active {
+      color: #6e5c2c;
+      background-color: transparent;
+      text-decoration: none;
+    }
+
+    /* choice styling */
+    .choice_input[type="radio"]{
+        display: none;
+    }
+    .choice_label{
+        cursor: pointer;
+        color: #1d9157;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        margin-left: 50px;
+
+    }
+    .choice_label:before{
+        content: "";
+        height: 20px;
+        width: 20px;
+        border: 2px solid #1d9157;
+        border-radius: 50%;
+        margin-right: 20px;
+    }
+    .choice_input[type="radio"]:checked + label{
+        font-size: 25px;
+    }
+    .choice_input[type="radio"]:checked + label:before{
+        height: 20px;
+        width: 20px;
+        border: 5px solid #1d9157;
+    }
+
+/* next page button style */
+.next-page {
+        border: 1px solid #201f1f;
+        background-color: transparent;
+        color: #201f1f;
+        padding: 5px 20px;
+        font-size: 18px;
+        font-weight: 500;
+        background: transparent;
+        cursor: pointer;
+        display: inline-block;
+        margin-right: 15px;
+        margin-bottom: 30px;
+        border-radius: 5px;
+        text-transform: capitalize;
+    }
+    .next-page {
+        background-image: linear-gradient(0, #201f1f, #201f1f);
+        background-size: 0;
+        transition: .8s;
+        background-repeat: no-repeat;
+    }
+
+    .next-page:hover {
+        background-size: 100%;
+        color: #ffde85;
+    }
+    a.next-page {
+      text-decoration: none;
+    }
+
+/* result page */
+/* total vote */
+.choice_voted{
+    border: 1px solid #0A3D5B;
+    background-color: transparent;
+    color: #0A3D5B;
+    padding: 5px 20px;
+    font-size: 18px;
+    font-weight: 500;
+    background: transparent;
+    margin-right: 15px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    text-transform: capitalize;
+}
+
+
