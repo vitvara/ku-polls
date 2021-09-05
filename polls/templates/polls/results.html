@@ -13,4 +13,6 @@
 
 <!-- link redirect to polls/question.id -->
 <a class="next-page" href="{% url 'polls:detail' question.id %}">Vote again?</a>
+<a class="next-page" href="{% url 'polls:pie-chart' question.id %}">Data Visualize</a>
+
 {% endblock content %}

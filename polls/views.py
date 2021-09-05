@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.contrib import messages
@@ -6,6 +6,23 @@ from django.views.generic import ListView, DetailView
 from django.utils import timezone
 
 from .models import Question, Choice
+
+
+def pie_chart(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    labels = []
+    data = []
+    result = reverse('polls:results', args=(question.id,))
+    queryset = question.choice_set.all()
+    for choice in queryset:
+        labels.append(choice.text)
+        data.append(choice.votes)
+
+    return render(request, 'polls/pie_chart.html', {
+        'labels': labels,
+        'data': data,
+        'result': result,
+    })
 
 class IndexView(ListView):
     """
