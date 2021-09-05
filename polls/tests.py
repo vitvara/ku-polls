@@ -105,6 +105,7 @@ class QuestionIndexViewTests(TestCase):
             response.context['latest_question_list'],
             ['<Question: Past question 2.>', '<Question: Past question 1.>']
         )
+
     def test_six_past_questions(self):
         """
         The questions must show only 5 newest question.
@@ -119,11 +120,11 @@ class QuestionIndexViewTests(TestCase):
         self.assertQuerysetEqual(
             response.context['latest_question_list'],
             [
-            '<Question: Past question 6.>',
-            '<Question: Past question 5.>',
-            '<Question: Past question 4.>',
-            '<Question: Past question 3.>',
-            '<Question: Past question 2.>'
+                '<Question: Past question 6.>',
+                '<Question: Past question 5.>',
+                '<Question: Past question 4.>',
+                '<Question: Past question 3.>',
+                '<Question: Past question 2.>'
             ]
         )
 
