@@ -1,7 +1,8 @@
 {% extends "polls/base.html" %}
 {% block content %}
 <!--  content header  -->
-<h1>{{ question.question_text }}</h1>
+<h1>{{ question.text }}</h1>
+<hr style="height:2px;border-width:0;color:gray;background-color:gray;margin-bottom: 30px;">
 
 <!--  main content  -->
 <ul>
@@ -12,7 +13,7 @@
 </ul>
 
 <!-- link redirect to polls/question.id -->
-<a class="next-page" href="{% url 'polls:detail' question.id %}">Vote again?</a>
-<a class="next-page" href="{% url 'polls:pie-chart' question.id %}">Data Visualize</a>
+<a class="next-page" href="{% url 'polls:polls-detail' question.id %}">Vote again?</a>
+<a class="next-page" href="{% url 'polls:polls-pie-chart' question.id %}">Data Visualize</a>
 
 {% endblock content %}

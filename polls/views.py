@@ -8,11 +8,12 @@ from django.utils import timezone
 from .models import Question, Choice
 
 
+
 def pie_chart(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     labels = []
     data = []
-    result = reverse('polls:results', args=(question.id,))
+    result = reverse('polls:polls-results', args=(question.id,))
     queryset = question.choice_set.all()
     for choice in queryset:
         labels.append(choice.text)
@@ -22,14 +23,14 @@ def pie_chart(request, question_id):
         'labels': labels,
         'data': data,
         'result': result,
+        'question_text': question.text,
     })
-
 
 class IndexView(ListView):
     """
     Get the newest 5 polls question and display in ?/polls.
     """
-    template_name = 'polls/index.html'
+    template_name = 'polls/home.html'
     context_object_name = 'latest_question_list'
 
     def get_context_data(self, *args, **kwargs):
@@ -87,4 +88,4 @@ def vote(request, question_id):
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+        return HttpResponseRedirect(reverse('polls:polls-results', args=(question.id,)))
