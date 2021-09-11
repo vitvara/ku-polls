@@ -15,13 +15,18 @@
         <input class="choice_input" type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
         <label class="choice_label" for="choice{{ forloop.counter }}">{{ choice.text }}</label><br>
     {% endfor %}
+    <hr style="height:2px;border-width:0;color:gray;background-color:gray;margin-bottom: 30px;">
         <!-- submit vote and go to the next page (?/result) -->
-        <input type="submit" class="next-page" value="Vote">
+        <a class="next-page float-left" href="{% url 'polls:polls-home' %}">Back</a>
+        <input type="submit" class="next-page float-right" value="Vote">
     </form>
 {% else %}
+
 <div class="container">
     <h3 style="color: #870000">No choice in this question</h3>
-    <a type="submit" class="next-page" style="margin-top: 3rem" href="polls:polls-home">Back</a>
+    <a class="next-page" href="{% url 'polls:polls-home' %}">Back</a>
 </div>
+
 {% endif %}
+
 {% endblock content %}

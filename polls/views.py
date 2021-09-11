@@ -1,10 +1,11 @@
+from django.db.models import query
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.contrib import messages
 from django.views.generic import ListView, DetailView
 from django.utils import timezone
-
+from django.db.models import Q
 from .models import Question, Choice
 
 
@@ -43,7 +44,8 @@ class IndexView(ListView):
         Return the last five published questions (not including those set to be
         published in the future).
         """
-        return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
+        query_question = Question.objects.filter(Q(pub_date__lte=timezone.now(), end_date__gte=timezone.now()) | Q(end_date__isnull=True)).order_by('-pub_date')
+        return query_question
 
 
 class DetailView(DetailView):

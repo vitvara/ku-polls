@@ -9,7 +9,13 @@
             </a>
             <div class="poll-pub-date">
                 <!-- date format ex. 22:29 31-aug-21 -->
-                <small>{{ question.pub_date|date:"H:i d-b-y" }}</small>
+                <small>Open {{ question.get_pub_date }}</small>
+                <br>
+                {% if question.end_date %}
+                <small>Close {{ question.get_end_date }}</small>
+                {% else %}
+                <small>Close None</small>
+                {% endif %}
             </div>
         </div>
     {% endfor %}
