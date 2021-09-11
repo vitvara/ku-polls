@@ -17,6 +17,8 @@ class Question(models.Model):
     """
     text = models.CharField(max_length=200)
     pub_date = models.DateTimeField(default=timezone.now)
+    start_date = models.DateTimeField(null=True, blank=True)
+    end_date = models.DateTimeField(null=True, blank=True)
 
     def was_published_recently(self):
         """Make sure that the question object is not come from the future"""
