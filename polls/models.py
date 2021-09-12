@@ -20,8 +20,8 @@ class Question(models.Model):
     end_date = models.DateTimeField(null=True, blank=True)
 
     def is_polls_ended(self):
+        """check that poll is ended"""
         now = timezone.now()
-        print(self.end_date <= now)
         return self.end_date <= now
 
     def was_published_recently(self):
@@ -30,6 +30,7 @@ class Question(models.Model):
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
 
     def get_pub_date(self):
+        """Return the passing time"""
         time = timezone.now()
         if time.year > self.pub_date.year:
             return str(time.year - self.pub_date.year) + " year ago"
@@ -46,6 +47,7 @@ class Question(models.Model):
         return self.pub_date
     
     def get_end_date(self):
+        """Return remaining time"""
         time = timezone.now()
         if self.end_date.day - time.day <= 1 and self.end_date.month == time.month and self.end_date.year == time.year :
             if self.end_date.day - time.day == 1:
