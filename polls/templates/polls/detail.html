@@ -7,6 +7,15 @@
 
 <!-- main content -->
 <!-- request api question vote -->
+{% if question.is_polls_ended %}
+<h3>Poll is ended</h3>
+<div style="margin-top: 50px">
+    <a class="next-page float-left" href="{% url 'polls:polls-home' %}">Back</a>
+    <a class="next-page" href="{% url 'polls:polls-results' question.id %}">Result</a>
+</div>
+
+
+{% else %}
 <form action="{% url 'polls:polls-vote' question.id %}" method="post">
 {% csrf_token %}
 {% if question.choice_set.all %}
@@ -26,6 +35,8 @@
     <h3 style="color: #870000">No choice in this question</h3>
     <a class="next-page" href="{% url 'polls:polls-home' %}">Back</a>
 </div>
+{% endif %}
+
 
 {% endif %}
 

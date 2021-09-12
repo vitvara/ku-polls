@@ -19,6 +19,11 @@ class Question(models.Model):
     pub_date = models.DateTimeField(default=timezone.now)
     end_date = models.DateTimeField(null=True, blank=True)
 
+    def is_polls_ended(self):
+        now = timezone.now()
+        print(self.end_date <= now)
+        return self.end_date <= now
+
     def was_published_recently(self):
         """Make sure that the question object is not come from the future"""
         now = timezone.now()
@@ -52,6 +57,7 @@ class Question(models.Model):
             if self.end_date.second > time.second:
                 return "within " + str(self.end_date.second - time.second) + " seconds"
         return self.end_date
+        
     def __str__(self):
         return self.text
 

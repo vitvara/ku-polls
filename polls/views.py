@@ -9,7 +9,6 @@ from django.db.models import Q
 from .models import Question, Choice
 
 
-
 def pie_chart(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     labels = []
@@ -24,7 +23,7 @@ def pie_chart(request, question_id):
         'labels': labels,
         'data': data,
         'result': result,
-        'question_text': question.text,
+        'question': question,
     })
 
 class IndexView(ListView):
@@ -45,6 +44,7 @@ class IndexView(ListView):
         published in the future).
         """
         query_question = Question.objects.filter(Q(pub_date__lte=timezone.now(), end_date__gte=timezone.now()) | Q(end_date__isnull=True)).order_by('-pub_date')
+        print(query_question)
         return query_question
 
 
@@ -61,11 +61,36 @@ class DetailView(DetailView):
         return Question.objects.filter(pub_date__lte=timezone.now())
 
 
+class ResultHomePage(ListView):
+    template_name = 'polls/all_result.html'
+    context_object_name = 'latest_question_list'
+
+    def get_context_data(self, *args, **kwargs):
+        data = super(ResultHomePage, self).get_context_data(*args, **kwargs)
+        data['title'] = "List"
+        return data
+
+    def get_queryset(self):
+        """
+        Return the last five published questions (not including those set to be
+        published in the future).
+        """
+        query_question = Question.objects.filter(Q(end_date__lte=timezone.now()) | Q(end_date__isnull=True)).order_by('-pub_date')
+        print(query_question)
+        return query_question
+
+
 class ResultsView(DetailView):
     """Display all vote result of the selected question"""
     model = Question
     template_name = 'polls/results.html'
 
+    def get_context_data(self, *args, **kwargs):
+        data = super(ResultsView, self).get_context_data(*args, **kwargs)
+        data['title'] = "List"
+        data['back_home'] = True
+        data['back_page'] = reverse('polls:polls-list-results')
+        return data
 
 def vote(request, question_id):
     """Save the voting result to question object that user selected"""
@@ -74,7 +99,6 @@ def vote(request, question_id):
     try:
         # check selected choice
         selected_choice = question.choice_set.get(pk=int(request.POST['choice']))
-        messages.success(request, "You voted successfully.")
     except (KeyError, Choice.DoesNotExist):
         # User not select any choice
         # display warning messages
@@ -85,8 +109,13 @@ def vote(request, question_id):
         })
     else:
         # save vote
+        
+        if question.end_date < timezone.now():
+            messages.error(request, "You voted failed! Polls ended")
+            return HttpResponseRedirect(reverse('polls:polls-results', args=(question.id,)))
         selected_choice.votes += 1
         selected_choice.save()
+        messages.success(request, "You voted successfully.")
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.

@@ -13,9 +13,10 @@
 </ul>
 
 <!-- link redirect to polls/question.id -->
-<a class="next-page float-left" href="{% url 'polls:polls-home' %}">Back</a>
+<a class="next-page float-left" href='{% url 'polls:polls-home' %}'>Back</a>
 <a class="next-page float-right" href="{% url 'polls:polls-pie-chart' question.id %}">Data Visualize</a>
+{% if not question.is_polls_ended %}
 <a class="next-page float-right" href="{% url 'polls:polls-detail' question.id %}">Vote again?</a>
-
+{% endif %}
 
 {% endblock content %}

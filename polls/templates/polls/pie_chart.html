@@ -1,13 +1,13 @@
 {% extends "polls/base.html" %}
 
 {% block content %}
-  <h1>{{ question_text }}</h1>
+  <h1>{{ question.text }}</h1>
   <hr style="height:2px;border-width:0;color:gray;background-color:gray;margin-bottom: 30px;">
   <div id="container"  style="width: 75%;margin-left: 10%; position:relative;">
     <canvas id="pie-chart"></canvas>
     
   </div>
-  <a class="next-page" href="{{ result }}">Back</a>
+  <a class="next-page" href="{% url 'polls:polls-results' question.id %}">Back</a>
   
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
