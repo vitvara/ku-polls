@@ -7,6 +7,10 @@
             <a class="question_text_polls" href="{% url 'polls:polls-detail' question.id %}">
                 {{ question.text }}
             </a>
+            <a class="next-page float-right" style="padding: 25px 20px; border: 3px" href="{% url 'polls:polls-results' question.id %}">Result</a>
+            {% if not question.is_polls_ended %}
+            <a class="next-page float-right" style="padding: 25px 20px; border: 3px" href="{% url 'polls:polls-detail' question.id %}">Vote</a>
+            {% endif %}
             <div class="poll-pub-date">
                 <!-- date format ex. 22:29 31-aug-21 -->
                 <small>Open {{ question.get_pub_date }}</small>
