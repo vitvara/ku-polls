@@ -15,10 +15,14 @@
                 <!-- date format ex. 22:29 31-aug-21 -->
                 <small>Open {{ question.get_pub_date }}</small>
                 <br>
-                {% if question.end_date %}
-                <small>Close {{ question.get_end_date }}</small>
+                {% if question.is_polls_ended %}
+                    <small>ended</small>
                 {% else %}
-                <small>Close None</small>
+                    {% if question.end_date %}
+                    <small>Close {{ question.get_end_date }}</small>
+                    {% else %}
+                    <small>Close None</small>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
