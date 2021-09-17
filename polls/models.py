@@ -19,7 +19,7 @@ class Question(models.Model):
     pub_date = models.DateTimeField(default=timezone.now)
     end_date = models.DateTimeField(null=True, blank=True)
 
-    def is_polls_ended(self):
+    def can_vote(self):
         """check that poll is ended"""
         now = timezone.now()
         return self.end_date <= now
