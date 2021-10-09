@@ -5,7 +5,7 @@ from django.utils import timezone
 
 class Question(models.Model):
     """
-    Stores a set of Question and Question's choice
+    Stores a set of Question and Question's choice.
 
     Property
     --------
@@ -15,29 +15,32 @@ class Question(models.Model):
     pub_date: datetime
         Time that the question has been created.
     """
+
     text = models.CharField(max_length=200)
     pub_date = models.DateTimeField(default=timezone.now)
     end_date = models.DateTimeField(null=True, blank=True)
 
     def can_vote(self):
-        """check that poll is ended"""
+        """Check that poll is ended."""
         now = timezone.now()
+        if self.end_date == None:
+            return True
         return self.end_date <= now
 
     def was_published_recently(self):
-        """Make sure that the question object is not come from the future"""
+        """Make sure that the question object is not come from the future."""
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
 
     def get_pub_date(self):
-        """Return the passing time"""
+        """Return the passing time."""
         time = timezone.now()
         if time.year > self.pub_date.year:
             return str(time.year - self.pub_date.year) + " year ago"
         elif time.month > self.pub_date.month:
             return str(time.month - self.pub_date.month) + " month ago"
         elif time.day > self.pub_date.day:
-            return str(time.day- self.pub_date.day) + " day ago"
+            return str(time.day - self.pub_date.day) + " day ago"
         elif time.hour > self.pub_date.hour:
             return str(time.hour - self.pub_date.hour) + " hour ago"
         elif time.minute > self.pub_date.minute:
@@ -45,11 +48,11 @@ class Question(models.Model):
         elif time.second > self.pub_date.second:
             return str(time.second - self.pub_date.second) + " second ago"
         return self.pub_date
-    
+
     def get_end_date(self):
-        """Return remaining time"""
+        """Return remaining time."""
         time = timezone.now()
-        if self.end_date.day - time.day <= 1 and self.end_date.month == time.month and self.end_date.year == time.year :
+        if self.end_date.day - time.day <= 1 and self.end_date.month == time.month and self.end_date.year == time.year:
             if self.end_date.day - time.day == 1:
                 return "by tomorrow"
             elif self.end_date.hour > time.hour:
@@ -59,14 +62,14 @@ class Question(models.Model):
             if self.end_date.second > time.second:
                 return "within " + str(self.end_date.second - time.second) + " seconds"
         return self.end_date
-        
+
     def __str__(self):
         return self.text
 
 
 class Choice(models.Model):
     """
-    Store Choice object that related to :model: `polls.Question`
+    Store Choice object that related to :model: `polls.Question`.
 
     Property
     --------
@@ -78,6 +81,7 @@ class Choice(models.Model):
     vote: int
         Number of vote for that choice.
     """
+
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)

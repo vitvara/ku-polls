@@ -1,4 +1,3 @@
-from django.db.models import query
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
@@ -10,6 +9,7 @@ from .models import Question, Choice
 
 
 def pie_chart(request, question_id):
+    """Show pie chart on data visualize page."""
     question = get_object_or_404(Question, pk=question_id)
     labels = []
     data = []
@@ -26,14 +26,15 @@ def pie_chart(request, question_id):
         'question': question,
     })
 
+
 class IndexView(ListView):
-    """
-    Get the newest 5 polls question and display in ?/polls.
-    """
+    """Get the newest 5 polls question and display in ?/polls."""
+
     template_name = 'polls/home.html'
     context_object_name = 'latest_question_list'
 
     def get_context_data(self, *args, **kwargs):
+        """Get a context data."""
         data = super(IndexView, self).get_context_data(*args, **kwargs)
         data['title'] = "List"
         return data
@@ -43,13 +44,13 @@ class IndexView(ListView):
         Return the last five published questions (not including those set to be
         published in the future).
         """
-        query_question = Question.objects.filter(Q(pub_date__lte=timezone.now()) | Q(end_date__isnull=True)).order_by('-pub_date')
-        print(query_question)
-        return query_question
+        query_question = Question.objects.filter(Q(pub_date__lte=timezone.now()) | Q(end_date__isnull=True, pub_date__lte=timezone.now())).order_by('-pub_date')
+        return query_question[:5]
 
 
 class DetailView(DetailView):
-    """Display the all choice of the selected question in ?/polls/<question.id>"""
+    """Display the all choice of the selected question in ?/polls/<question.id>."""
+
     model = Question
     template_name = 'polls/detail.html'
 
@@ -61,36 +62,19 @@ class DetailView(DetailView):
         return Question.objects.filter(pub_date__lte=timezone.now())
 
 
-class ResultHomePage(ListView):
-    template_name = 'polls/all_result.html'
-    context_object_name = 'latest_question_list'
-
-    def get_context_data(self, *args, **kwargs):
-        data = super(ResultHomePage, self).get_context_data(*args, **kwargs)
-        data['title'] = "List"
-        return data
-
-    def get_queryset(self):
-        """
-        Return the last five published questions (not including those set to be
-        published in the future).
-        """
-        query_question = Question.objects.filter(Q(end_date__lte=timezone.now()) | Q(end_date__isnull=True)).order_by('-pub_date')
-        print(query_question)
-        return query_question
-
-
 class ResultsView(DetailView):
     """Display all vote result of the selected question"""
+
     model = Question
     template_name = 'polls/results.html'
 
     def get_context_data(self, *args, **kwargs):
+        """Get context data."""
         data = super(ResultsView, self).get_context_data(*args, **kwargs)
         data['title'] = "List"
         data['back_home'] = True
-        data['back_page'] = reverse('polls:polls-list-results')
         return data
+
 
 def vote(request, question_id):
     """Save the voting result to question object that user selected"""
@@ -109,7 +93,6 @@ def vote(request, question_id):
         })
     else:
         # save vote
-        
         if question.end_date < timezone.now():
             messages.error(request, "You voted failed! Polls ended")
             return HttpResponseRedirect(reverse('polls:polls-results', args=(question.id,)))
