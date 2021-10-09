@@ -13,7 +13,7 @@ install:
     
 # script to run tests. Script can have many commands, one per line.
 script: 
-  - python -m unittest discover -p "*_test.py"
+  - python -m unittest discover -p "test.py"
 
 script:
   - coverage run -m unittest discover -p "test.py"
