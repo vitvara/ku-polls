@@ -10,14 +10,13 @@ git:
 # Install dependencies
 install:
   - pip install -r requirements.txt
-  - pip install pytest
     
 # script to run tests. Script can have many commands, one per line.
 script: 
   - pytest
 
-script:
-  - coverage run -m unittest discover -p "test.py"
+# script:
+#   - coverage run -m unittest discover -p "test.py"
 
 after_script:
   - bash <(curl -s https://codecov.io/bash)
