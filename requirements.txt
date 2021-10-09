@@ -1,2 +1,2 @@
-flake9==3.9.2
+flake8==3.9.2
 coverage==5.5
