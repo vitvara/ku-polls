@@ -13,10 +13,10 @@ install:
     
 # script to run tests. Script can have many commands, one per line.
 script: 
-  - pytest
+  - python manage.py test
 
-# script:
-#   - coverage run -m unittest discover -p "test.py"
+script:
+  - coverage run manage.py test
 
 after_script:
   - bash <(curl -s https://codecov.io/bash)
