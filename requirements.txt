@@ -1,4 +1,4 @@
 flake8==3.9.2
 coverage==5.5
 django==3.2.6
-python-decouple==0.0.7
+python-decouple

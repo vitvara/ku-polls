@@ -10,6 +10,7 @@ git:
 # Install dependencies
 install:
   - pip install -r requirements.txt
+  - pip install python-decouple
     
 # script to run tests. Script can have many commands, one per line.
 script: 
