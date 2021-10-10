@@ -1,4 +1,4 @@
 flake8==3.9.2
 coverage==5.5
 django==3.2.6
-dateutil
+python-dateutil
