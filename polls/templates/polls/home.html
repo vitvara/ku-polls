@@ -1,0 +1,33 @@
+{% extends "polls/base.html" %}
+{% block content %}
+{% if latest_question_list %}
+    {% for question in latest_question_list %}
+    <!-- list 5 newest polls -->
+        <div class="polls-section">
+            <a class="question_text_polls" href="{% url 'polls:polls-detail' question.id %}">
+                {{ question.text }}
+            </a>
+            <a class="next-page float-right" style="padding: 25px 20px; border: 3px" href="{% url 'polls:polls-results' question.id %}">Result</a>
+            {% if question.can_vote%}
+            <a class="next-page float-right" style="padding: 25px 20px; border: 3px" href="{% url 'polls:polls-detail' question.id %}">Vote</a>
+            {% endif %}
+            <div class="poll-pub-date">
+                <!-- date format ex. 22:29 31-aug-21 -->
+                <small>Open {{ question.get_pub_date }}</small>
+                <br>
+                {% if not question.can_vote %}
+                    <small>ended</small>
+                {% else %}
+                    {% if question.end_date %}
+                    <small>Close {{ question.get_end_date }}</small>
+                    {% else %}
+                    <small>Close None</small>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <h3 align="center">No polls are available.</h3>
+{% endif %}
+{% endblock content %}

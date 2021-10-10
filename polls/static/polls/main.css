@@ -12,38 +12,40 @@ body {
 
 /* polls page */
   .polls-section {
-    background: #272424;
+    background: #fcf7e6;
+    font-weight:bold;
+    font-size:large;
     padding: 10px 20px;
-    border: 1px solid #201f1f;
-    border-radius: 3px;
+    border: 2px solid #201f1f;
+    border-radius: 10px;
     margin-bottom: 20px;
   }
   .poll-pub-date {
     margin-right: 20px;
-    color: #ffffff;
+    color: #585858;
   }
 
 /* link styling */
     a.question_text_polls:link {
-      color: #ffde85;
+      color: #201f1f;
       background-color: transparent;
       text-decoration: none;
     }
 
     a.question_text_polls:visited {
-      color: #ffde85;
+      color: #201f1f;
       background-color: transparent;
       text-decoration: none;
     }
 
     a.question_text_polls:hover {
-      color: #cca845;
+      color: #201f1f;
       background-color: transparent;
       text-decoration: none;
     }
 
     a.question_text_polls:active {
-      color: #6e5c2c;
+      color: #201f1f;
       background-color: transparent;
       text-decoration: none;
     }
@@ -124,5 +126,3 @@ body {
     border-radius: 5px;
     text-transform: capitalize;
 }
-
-
