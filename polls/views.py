@@ -8,7 +8,7 @@ from django.db.models import Q
 from .models import Question, Choice
 
 
-def pie_chart(request, question_id):
+def pie_chart(request, question_id): # pragma: no cover
     """Show pie chart on data visualize page."""
     question = get_object_or_404(Question, pk=question_id)
     labels = []
@@ -93,7 +93,8 @@ def vote(request, question_id):
         })
     else:
         # save vote
-        if question.end_date < timezone.now():
+
+        if question.end_date != None and question.end_date < timezone.now():
             messages.error(request, "You voted failed! Polls ended")
             return HttpResponseRedirect(reverse('polls:polls-results', args=(question.id,)))
         selected_choice.votes += 1

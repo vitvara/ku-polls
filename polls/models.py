@@ -23,9 +23,9 @@ class Question(models.Model):
     def can_vote(self):
         """Check that poll is ended."""
         now = timezone.now()
-        if self.end_date == None:
+        if self.end_date is None:
             return True
-        return self.end_date <= now
+        return self.end_date >= now
 
     def was_published_recently(self):
         """Make sure that the question object is not come from the future."""
@@ -34,34 +34,11 @@ class Question(models.Model):
 
     def get_pub_date(self):
         """Return the passing time."""
-        time = timezone.now()
-        if time.year > self.pub_date.year:
-            return str(time.year - self.pub_date.year) + " year ago"
-        elif time.month > self.pub_date.month:
-            return str(time.month - self.pub_date.month) + " month ago"
-        elif time.day > self.pub_date.day:
-            return str(time.day - self.pub_date.day) + " day ago"
-        elif time.hour > self.pub_date.hour:
-            return str(time.hour - self.pub_date.hour) + " hour ago"
-        elif time.minute > self.pub_date.minute:
-            return str(time.minute - self.pub_date.minute) + " minute ago"
-        elif time.second > self.pub_date.second:
-            return str(time.second - self.pub_date.second) + " second ago"
-        return self.pub_date
+        return self.pub_date.strftime("%d %b %y [%H:%M]")
 
     def get_end_date(self):
         """Return remaining time."""
-        time = timezone.now()
-        if self.end_date.day - time.day <= 1 and self.end_date.month == time.month and self.end_date.year == time.year:
-            if self.end_date.day - time.day == 1:
-                return "by tomorrow"
-            elif self.end_date.hour > time.hour:
-                return "within " + str(self.end_date.hour - time.hour) + " hours"
-            elif self.end_date.minute > time.minute:
-                return "within " + str(self.end_date.minute - time.minute) + " minutes"
-            if self.end_date.second > time.second:
-                return "within " + str(self.end_date.second - time.second) + " seconds"
-        return self.end_date
+        return self.end_date.strftime("%d %b %y [%H:%M]")
 
     def __str__(self):
         return self.text
