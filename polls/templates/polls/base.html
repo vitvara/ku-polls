@@ -1,6 +1,9 @@
 {% load static %}
 <!DOCTYPE html>
 <head>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
+    </style>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,7 +21,12 @@
         <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
             <div class="container">
                 <!-- KU POLLS logo link to /polls page -->
-                <a class="nav-link question_text_polls" style="color: #ffde85;" href="{% url 'polls:polls-home' %}">KU POLLS</a>
+                <a class="nav-link icon" href="{% url 'polls:polls-home' %}">KU POLLS</a>
+                {% if user.is_authenticated %}
+                <a class="nav-link icon" href="{% url 'logout' %}">logout</a>
+                {% else %}
+                <a class="nav-link icon" href="{% url 'login' %}">login</a>
+                {% endif %}
             </div>
         </nav>
     </header>
