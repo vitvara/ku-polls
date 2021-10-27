@@ -83,6 +83,7 @@ def vote(request, question_id):
     """Save the voting result to question object that user selected"""
     # load question object
     question = get_object_or_404(Question, pk=question_id)
+    user = request.user
     try:
         # check selected choice
         selected_choice = question.choice_set.get(pk=int(request.POST['choice']))
@@ -96,12 +97,16 @@ def vote(request, question_id):
         })
     else:
         # save vote
-
-        if question.end_date != None and question.end_date < timezone.now():
+        if not question.can_vote():
             messages.error(request, "You voted failed! Polls ended")
             return HttpResponseRedirect(reverse('polls:polls-results', args=(question.id,)))
-        selected_choice.votes += 1
-        selected_choice.save()
+        if question.vote_set.filter(user=user).exists():
+            vote = question.vote_set.get(user=user)
+            vote.choice = selected_choice
+            vote.save()  
+        else:
+            selected_choice.vote_set.create(user=request.user, question=question)
+            selected_choice.save()
         messages.success(request, "You voted successfully.")
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
