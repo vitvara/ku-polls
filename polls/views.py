@@ -10,6 +10,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+import logging
+from django.contrib.auth.signals import user_logged_in, user_logged_out, user_login_failed
+from django.dispatch import receiver
+
+logging.basicConfig(filename='userlogging.log', encoding='utf-8', level=logging.DEBUG)
+logger = logging.getLogger("polls") 
 
 def pie_chart(request, question_id): # pragma: no cover
     """Show pie chart on data visualize page."""
@@ -103,11 +109,12 @@ def vote(request, question_id):
         if question.vote_set.filter(user=user).exists():
             vote = question.vote_set.get(user=user)
             vote.choice = selected_choice
-            vote.save()  
+            vote.save()
+            messages.success(request, "You have successfully changed your vote.")  
         else:
             selected_choice.vote_set.create(user=request.user, question=question)
             selected_choice.save()
-        messages.success(request, "You voted successfully.")
+            messages.success(request, "You voted successfully.")
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
@@ -120,12 +127,39 @@ def signup(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            raw_passwd = form.cleaned_data.get('password')
+            raw_passwd = form.cleaned_data.get('password2')
             user = authenticate(username=username,password=raw_passwd)
             login(request, user)
             return redirect('polls:polls-home')
-        # what if form is not valid?
-        # we should display a message in signup.html
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form':form})
+
+
+def get_client_ip(request):
+    """Get the visitor’s IP address using request headers."""
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
+# @receiver(user_logged_in)
+# def user_logged_in_callback(sender, request, user, **kwargs):  
+#     ip = get_client_ip(request)
+#     logger.info(f"{user} logged in from {ip}")
+
+# @receiver(user_logged_out)
+# def user_logged_out_callback(sender, request, user, **kwargs):  
+#     print('hello')
+#     ip = get_client_ip(request)
+#     logger.info(f"{user} logged out from {ip}")
+
+# @receiver(user_login_failed)
+# def user_login_failed_callback(sender, request,credentials, **kwargs):  
+#     ip = get_client_ip(request)
+#     logger.warning(f'login failed for: {credentials} from {ip}')
+    
+    
+

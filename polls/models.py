@@ -65,7 +65,7 @@ class Choice(models.Model):
 
     @property
     def votes(self):
-        return self.question.vote_set.filter(choice=self).count
+        return self.question.vote_set.filter(choice=self).count()
     
     def __str__(self):
         return self.text
