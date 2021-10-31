@@ -14,7 +14,7 @@ import logging
 from django.contrib.auth.signals import user_logged_in, user_logged_out, user_login_failed
 from django.dispatch import receiver
 
-logging.basicConfig(filename='userlogging.log', encoding='utf-8', level=logging.DEBUG)
+logging.basicConfig(filename='userlogging.log',level=logging.DEBUG)
 logger = logging.getLogger("polls") 
 
 def pie_chart(request, question_id): # pragma: no cover
@@ -96,7 +96,7 @@ def vote(request, question_id):
     except (KeyError, Choice.DoesNotExist):
         # User not select any choice
         # display warning messages
-        messages.warning(request, "You didn't select a choice.")
+        messages.warning(request, "You didn't select a choice.", fail_silently=True)
         # Redisplay the question voting form.
         return render(request, 'polls/detail.html', {
             'question': question,
@@ -104,17 +104,17 @@ def vote(request, question_id):
     else:
         # save vote
         if not question.can_vote():
-            messages.error(request, "You voted failed! Polls ended")
+            messages.error(request, "You voted failed! Polls ended", fail_silently=True)
             return HttpResponseRedirect(reverse('polls:polls-results', args=(question.id,)))
         if question.vote_set.filter(user=user).exists():
             vote = question.vote_set.get(user=user)
             vote.choice = selected_choice
             vote.save()
-            messages.success(request, "You have successfully changed your vote.")  
+            messages.success(request, "You have successfully changed your vote.",fail_silently=True )  
         else:
             selected_choice.vote_set.create(user=request.user, question=question)
             selected_choice.save()
-            messages.success(request, "You voted successfully.")
+            messages.success(request, "You voted successfully.",fail_silently=True )
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
