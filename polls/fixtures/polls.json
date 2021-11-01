@@ -1,0 +1,89 @@
+[
+{
+  "model": "polls.question",
+  "pk": 12,
+  "fields": {
+    "text": "How your day has been",
+    "pub_date": "2021-10-10T04:40:32Z",
+    "end_date": "2021-10-20T04:40:36Z"
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 13,
+  "fields": {
+    "text": "hello world",
+    "pub_date": "2021-10-10T03:27:48.212Z",
+    "end_date": null
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 15,
+  "fields": {
+    "question": 13,
+    "text": "ans: 1"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 16,
+  "fields": {
+    "question": 13,
+    "text": "ans: 2"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 17,
+  "fields": {
+    "question": 13,
+    "text": "ans: 3"
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 1,
+  "fields": {
+    "user": 4,
+    "question": 13,
+    "choice": 17
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 2,
+  "fields": {
+    "user": 3,
+    "question": 13,
+    "choice": 16
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 3,
+  "fields": {
+    "user": 1,
+    "question": 13,
+    "choice": 16
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 4,
+  "fields": {
+    "user": 15,
+    "question": 13,
+    "choice": 17
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 5,
+  "fields": {
+    "user": 10,
+    "question": 13,
+    "choice": 16
+  }
+}
+]
