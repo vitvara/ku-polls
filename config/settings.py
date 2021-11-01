@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from django.contrib.messages import constants as messages
 from pathlib import Path
 from decouple import config
-
+import os
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-secondary',
@@ -35,7 +35,7 @@ SECRET_KEY = config('SECRET_KEY', default="not-have-secret-key")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.122', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -65,7 +65,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -78,6 +78,16 @@ TEMPLATES = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    # username/password authentication
+   'django.contrib.auth.backends.ModelBackend',
+]
+
+
+
+LOGIN_REDIRECT_URL = 'polls:polls-home'
+# LOGOUT_REDIRECT_URL = 'logout'
+
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
@@ -88,7 +98,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -127,7 +136,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 

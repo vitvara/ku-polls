@@ -4,9 +4,15 @@
     {% for question in latest_question_list %}
     <!-- list 5 newest polls -->
         <div class="polls-section">
+            {% if question.can_vote %}
             <a class="question_text_polls" href="{% url 'polls:polls-detail' question.id %}">
                 {{ question.text }}
             </a>
+            {% else %}
+            <a class="question_text_polls" href="{% url 'polls:polls-results' question.id %}">
+                {{ question.text }}
+            </a>
+            {% endif %}
             <a class="next-page float-right" style="padding: 25px 20px; border: 3px" href="{% url 'polls:polls-results' question.id %}">Result</a>
             {% if question.can_vote%}
             <a class="next-page float-right" style="padding: 25px 20px; border: 3px" href="{% url 'polls:polls-detail' question.id %}">Vote</a>
