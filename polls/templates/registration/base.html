@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<style>
+    .next-page {
+        border: 1px solid #00310f;
+        background-color: transparent;
+        color: #32673d;
+        padding: 5px 20px;
+        font-size: 18px;
+        font-weight: 500;
+        background: transparent;
+        cursor: pointer;
+        display: inline-block;
+        margin-right: 15px;
+        margin-bottom: 30px;
+        border-radius: 5px;
+        text-transform: capitalize;
+    }
+    .next-page {
+        background-image: linear-gradient(0, #363636, #363636);
+        background-size: 0;
+        transition: .8s;
+        background-repeat: no-repeat;
+    }
+
+    .next-page:hover {
+        background-size: 100%;
+        color: #44ff73;
+    }
+
+    .container {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+
+    .login-block {
+        border: 3px solid #00310f;
+        background-color: #ffffff;
+        color: #32673d;
+        padding: 5px 20px;
+        font-size: 18px;
+        font-weight: 500;
+        background: #F1FFF4;
+        display: inline-block;
+        border-radius: 8px;
+        text-transform: capitalize;
+        margin-top: 50%;
+    }
+
+</style>
+</head>
+<body>
+<div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }} mb-0 alert-dismissible fade show" role="alert">
+                <strong>Message: </strong>  {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <!-- content section -->
+    {% block content %}{% endblock %}
+</div>
+</body>
+</html>
