@@ -8,3 +8,18 @@
 
 ## Plan
 - [Iteration 1](https://github.com/vitvara/ku-polls/wiki/Iteration-1-Plan)
+
+## Installation
+Create virtual enviroment on this github directory<br>
+`python -m venv venv`
+
+Install package:<br>
+`pip install -r requirement.txt`
+
+Django migrations<br>
+
+`python manage.py makemigrations`<br>
+`python manage.py migrate`
+
+Runserver<br>
+`python manage.py runserver`
